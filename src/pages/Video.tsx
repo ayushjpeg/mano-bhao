@@ -4,7 +4,8 @@ export default function Dashboard() {
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const overlayRef = useRef<HTMLDivElement | null>(null)
-  const [emotion, setEmotion] = useState<string | null>(null)
+  const [customEmotion, setCustomEmotion] = useState<string | null>(null) // Custom model emotion
+  const [deepFaceEmotion, setDeepFaceEmotion] = useState<string | null>(null) // DeepFace emotion
 
   useEffect(() => {
     const startCamera = async () => {
@@ -53,21 +54,23 @@ export default function Dashboard() {
 
       if (blob) {
         const formData = new FormData()
-        formData.append("file", blob, "frame.jpg")  // <<< Correct field name should be 'file'
+        formData.append("file", blob, "frame.jpg")
 
         try {
-          const res = await fetch(" https://75d1-49-37-44-112.ngrok-free.app/predict-emotion", {  // <<< Correct URL
+          const res = await fetch("https://7cf1-49-37-44-112.ngrok-free.app/predict-emotion", {
             method: "POST",
             body: formData,
           })
 
           const data = await res.json()
-          setEmotion(data.emotion)
+          // Set both the custom model's emotion and DeepFace emotion
+          setCustomEmotion(data.custom_model_emotion)
+          setDeepFaceEmotion(data.deepface_emotion)
         } catch (error) {
           console.error("Failed to send image:", error)
         }
       }
-    }, 1000) // <<< Changed interval to 1s to reduce load (optional)
+    }, 1000) // Capture image every second
 
     return () => clearInterval(interval)
   }, [])
@@ -99,8 +102,18 @@ export default function Dashboard() {
       </div>
 
       <div className="text-xl mt-4">
-        <span className="font-medium">Detected Emotion:</span>{" "}
-        <span className="font-bold text-amber-300">{emotion ?? "Loading..."}</span>
+        <div>
+          <span className="font-medium">Custom Model Emotion:</span>{" "}
+          <span className="font-bold text-amber-300">
+            {customEmotion ?? "Loading..."}
+          </span>
+        </div>
+        <div>
+          <span className="font-medium">DeepFace Emotion:</span>{" "}
+          <span className="font-bold text-amber-300">
+            {deepFaceEmotion ?? "Loading..."}
+          </span>
+        </div>
       </div>
     </div>
   )
