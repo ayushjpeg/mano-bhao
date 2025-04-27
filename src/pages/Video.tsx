@@ -57,7 +57,7 @@ export default function Dashboard() {
         formData.append("file", blob, "frame.jpg")
 
         try {
-          const res = await fetch("https://57b8-49-37-44-112.ngrok-free.app/predict-emotion", {
+          const res = await fetch("https://02a3-49-37-44-112.ngrok-free.app/predict-emotion", {
             method: "POST",
             body: formData,
           })
