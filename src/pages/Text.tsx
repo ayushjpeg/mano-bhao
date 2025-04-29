@@ -12,7 +12,7 @@ export default function Text() {
     setIsLoading(true)
 
     try {
-      const res = await fetch("https://your-backend-url/predict-text-sentiment", {
+      const res = await fetch("https://8f27-2405-201-800b-4078-f823-1a0b-11f1-d6d6.ngrok-free.app/predict-text", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export default function Text() {
       })
 
       const data = await res.json()
-      setPrediction(data.prediction)
+      setPrediction(data.sentiment)
     } catch (error) {
       console.error("Failed to predict sentiment:", error)
     } finally {
@@ -50,10 +50,10 @@ export default function Text() {
           className="w-full p-3 rounded-xl border-2 border-zinc-700 bg-zinc-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
           <option value="" disabled>Select a model</option>
-          <option value="RNN">RNN</option>
-          <option value="CNN">CNN</option>
-          <option value="GNN">GNN</option>
-          {/* Add more models as per your backend */}
+          <option value="keras">RNN</option>
+          <option value="cnn">CNN</option>
+          <option value="gnn">GNN</option>
+          <option value="nonAI">Non-AI</option>
         </select>
 
         <button
