@@ -12,7 +12,7 @@ export default function Text() {
     setIsLoading(true)
 
     try {
-      const res = await fetch("https://8f27-2405-201-800b-4078-f823-1a0b-11f1-d6d6.ngrok-free.app/predict-text", {
+      const res = await fetch("https://1ddf-14-139-223-164.ngrok-free.app/predict-text", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
